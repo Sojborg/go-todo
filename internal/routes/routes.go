@@ -1,13 +1,16 @@
 package routes
 
 import (
-	"github.com/gofiber/fiber/v2"
-	todoControllers "github.com/sojborg/go-todo/internal/controllers"
+	"github.com/go-chi/chi/v5"
+	"github.com/sojborg/go-todo/internal/controllers/authController"
+	"github.com/sojborg/go-todo/internal/controllers/todoController"
 )
 
-func RegisterRoutes(app *fiber.App) {
-	app.Get("/todos", todoControllers.GetTodos)
-	app.Post("/todos", todoControllers.CreateTodo)
-	app.Patch("/todos/:id", todoControllers.UpdateTodo)
-	app.Delete("/todos/:id", todoControllers.DeleteTodo)
+func RegisterRoutes(r *chi.Mux) {
+	r.Get("/api/todos", todoController.GetTodos)
+	r.Post("/api/todos", todoController.CreateTodo)
+	r.Patch("/api/todos/{id}", todoController.UpdateTodo)
+	r.Delete("/api/todos/{id}", todoController.DeleteTodo)
+
+	r.Get("/auth/{provider}/callback", authController.GetAuthCallbackFunction)
 }

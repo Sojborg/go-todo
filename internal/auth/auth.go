@@ -23,8 +23,8 @@ func NewAuth() {
 		log.Fatal("Error loading .env file", err)
 	}
 
-	googleClientId = os.Getenv("GOOGLE_CLIENT_ID")
-	googleClientSecret = os.Getenv("GOOGLE_CLIENT_SECRET")
+	googleClientId := os.Getenv("GOOGLE_CLIENT_ID")
+	googleClientSecret := os.Getenv("GOOGLE_CLIENT_SECRET")
 
 	store := sessions.NewCookieStore([]byte(key))
 	store.MaxAge(MaxAge)
