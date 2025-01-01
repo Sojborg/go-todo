@@ -25,14 +25,18 @@ var collection *mongo.Collection
 func main() {
 	fmt.Println("Hello, World!")
 
-	// Load .env file
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file", err)
+	if os.Getenv("ENV") != "production" {
+		// Load .env file
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal("Error loading .env file", err)
+		}
 	}
 
+	ENV := os.Getenv("ENV")
 	PORT := os.Getenv("PORT")
 	MONGODB_URI := os.Getenv("MONGODB_URI")
+	fmt.Println("MONGODB_URI: ", MONGODB_URI)
 	clientOptions := options.Client().ApplyURI(MONGODB_URI)
 	client, err := mongo.Connect(context.Background(), clientOptions)
 
@@ -53,6 +57,18 @@ func main() {
 	collection = client.Database("todo").Collection("todos")
 
 	app := fiber.New()
+
+	if ENV == "development" {
+		app.Use(func(c *fiber.Ctx) error {
+			c.Set("Access-Control-Allow-Origin", "http://localhost:5173")
+			c.Set("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE")
+			c.Set("Access-Control-Allow-Headers", "Content-Type")
+			if c.Method() == "OPTIONS" {
+				return c.SendStatus(fiber.StatusOK)
+			}
+			return c.Next()
+		})
+	}
 
 	app.Get("/api/todos", getTodos)
 	app.Post("/api/todos", createTodo)

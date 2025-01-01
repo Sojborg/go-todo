@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../App";
 
 export type Todo = {
-	_id: number;
+	id: number;
 	body: string;
 	completed: boolean;
 };
@@ -34,12 +34,11 @@ const TodoList = () => {
 				fontSize={"4xl"}
 				textTransform={"uppercase"}
 				fontWeight={"bold"}
-				textAlign={"center"}
 				my={2}
 				bgGradient='linear(to-l, #0b85f8, #00ffff)'
 				bgClip='text'
 			>
-				Today's Tasks
+				Tasks
 			</Text>
 			{isLoading && (
 				<Flex justifyContent={"center"} my={4}>
@@ -56,7 +55,7 @@ const TodoList = () => {
 			)}
 			<Stack gap={3}>
 				{todos?.map((todo) => (
-					<TodoItem key={todo._id} todo={todo} />
+					<TodoItem key={todo.id} todo={todo} />
 				))}
 			</Stack>
 		</>
