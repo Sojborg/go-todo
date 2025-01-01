@@ -16,6 +16,7 @@ export default function Navbar() {
 						gap={3}
 						display={{ base: "none", sm: "flex" }}
 					>
+						<img src='/go.png' alt='logo' width={40} height={40} />						
 						<Text fontSize={"lg"} fontWeight={500}>
 							Daily Tasks
 						</Text>
