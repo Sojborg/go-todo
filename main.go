@@ -23,7 +23,7 @@ type Todo struct {
 var collection *mongo.Collection
 
 func main() {
-	fmt.Println("Hello, World!")
+	fmt.Println("Starting server...")
 
 	if os.Getenv("ENV") != "production" {
 		// Load .env file
@@ -84,6 +84,7 @@ func main() {
 	}
 
 	app.Listen(":" + PORT)
+	fmt.Println("Server started on port", PORT)
 }
 
 func getTodos(c *fiber.Ctx) error {
