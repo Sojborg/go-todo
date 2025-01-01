@@ -1,6 +1,6 @@
 module github.com/sojborg/go-todo
 
-go 1.23.4
+go 1.20.0
 
 require github.com/gofiber/fiber/v2 v2.52.6
 
