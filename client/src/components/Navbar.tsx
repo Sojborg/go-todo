@@ -5,6 +5,10 @@ import { LuSun } from "react-icons/lu";
 export default function Navbar() {
 	const { colorMode, toggleColorMode } = useColorMode();
 
+	const login = () => {
+		window.location.href = "http://localhost:4000/auth/google";
+	};
+
 	return (
 		<Container maxW={"900px"}>
 			<Box bg={useColorModeValue("gray.400", "gray.700")} px={4} my={4} borderRadius={"5"}>
@@ -20,6 +24,7 @@ export default function Navbar() {
 						<Text fontSize={"lg"} fontWeight={500}>
 							Daily Tasks
 						</Text>
+						<Button onClick={login}>Login</Button>
 					</Flex>
 
 					{/* RIGHT SIDE */}

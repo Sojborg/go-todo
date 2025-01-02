@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/sojborg/go-todo/internal/auth"
 	todoControllers "github.com/sojborg/go-todo/internal/controllers/todoController"
 	"github.com/sojborg/go-todo/internal/routes"
 
@@ -63,6 +64,8 @@ func main() {
 			w.WriteHeader(http.StatusOK)
 		})
 	}
+
+	auth.NewAuth()
 
 	routes.RegisterRoutes(r)
 

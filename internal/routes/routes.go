@@ -12,5 +12,6 @@ func RegisterRoutes(r *chi.Mux) {
 	r.Patch("/api/todos/{id}", todoController.UpdateTodo)
 	r.Delete("/api/todos/{id}", todoController.DeleteTodo)
 
+	r.Get("/auth/{provider}", authController.Login)
 	r.Get("/auth/{provider}/callback", authController.GetAuthCallbackFunction)
 }

@@ -11,7 +11,7 @@ import (
 
 func GetAuthCallbackFunction(w http.ResponseWriter, r *http.Request) {
 	provider := chi.URLParam(r, "provider")
-	fmt.Println("### AUTH PROVIDER ###", provider)
+	fmt.Println("### CALLBACK ###", provider)
 
 	if provider == "" {
 		http.Error(w, "Provider is required", http.StatusBadRequest)
@@ -28,4 +28,24 @@ func GetAuthCallbackFunction(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("### USER ###", user)
+}
+
+func Logout(res http.ResponseWriter, req *http.Request) {
+	gothic.Logout(res, req)
+	res.Header().Set("Location", "/")
+	res.WriteHeader(http.StatusTemporaryRedirect)
+}
+
+func Login(res http.ResponseWriter, r *http.Request) {
+	provider := chi.URLParam(r, "provider")
+	fmt.Println("### AUTH PROVIDER ###", provider)
+
+	r = r.WithContext(context.WithValue(r.Context(), "provider", provider))
+
+	// try to get the user without re-authenticating
+	if gothUser, err := gothic.CompleteUserAuth(res, r); err == nil {
+		fmt.Fprintln(res, gothUser)
+	} else {
+		gothic.BeginAuthHandler(res, r)
+	}
 }

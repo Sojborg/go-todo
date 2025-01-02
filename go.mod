@@ -7,6 +7,8 @@ toolchain go1.23.4
 require github.com/gofiber/fiber/v2 v2.52.6
 
 require (
+	cloud.google.com/go/compute v1.20.1 // indirect
+	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/go-chi/chi/v5 v5.2.0 // indirect
 	github.com/gofiber/fiber v1.14.6 // indirect
