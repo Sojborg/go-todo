@@ -13,7 +13,6 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -21,12 +20,14 @@ import (
 func main() {
 	fmt.Println("Starting server...")
 
+	fmt.Println("ENV: " + os.Getenv("ENV"))
+
 	if os.Getenv("ENV") != "production" {
 		// Load .env file
-		err := godotenv.Load(".env")
-		if err != nil {
-			log.Fatal("Error loading .env file", err)
-		}
+		// err := godotenv.Load(".env")
+		// if err != nil {
+		// 	log.Fatal("Error loading .env file", err)
+		// }
 	}
 
 	ENV := os.Getenv("ENV")
