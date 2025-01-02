@@ -19,9 +19,11 @@ const (
 )
 
 func NewAuth() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file", err)
+	if os.Getenv("ENV") != "production" {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal("Error loading .env file", err)
+		}
 	}
 
 	googleClientId := os.Getenv("GOOGLE_CLIENT_ID")
