@@ -44,9 +44,13 @@ func Login(response http.ResponseWriter, request *http.Request) {
 
 	// try to get the user without re-authenticating
 	if gothUser, err := gothic.CompleteUserAuth(response, request); err == nil {
-		gothic.StoreInSession("access_token", gothUser.AccessToken, request, response)
+		if err := gothic.StoreInSession("access_token", gothUser.AccessToken, request, response); err != nil {
+			http.Error(response, "Failed to store session", http.StatusInternalServerError)
+			return
+		}
 		fmt.Fprintln(response, gothUser)
 		http.Redirect(response, request, "/", http.StatusTemporaryRedirect)
+		return
 	} else {
 		gothic.BeginAuthHandler(response, request)
 	}
