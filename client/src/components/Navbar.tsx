@@ -6,7 +6,7 @@ export default function Navbar() {
 	const { colorMode, toggleColorMode } = useColorMode();
 
 	const login = () => {
-		window.location.href = "https://usual-chrissie-sojborg-72e46f20.koyeb.app/auth/google";
+		window.location.href = "/auth/google";
 	};
 
 	return (
