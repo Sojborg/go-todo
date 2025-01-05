@@ -52,7 +52,9 @@ func Login(response http.ResponseWriter, request *http.Request) {
 			HttpOnly: false, // Allow access from client-side JavaScript
 		}
 		http.SetCookie(response, cookie)
-		http.Redirect(response, request, "https://usual-chrissie-sojborg-72e46f20.koyeb.app/", http.StatusTemporaryRedirect)
+
+		response.Header().Set("Location", "/")
+		response.WriteHeader(http.StatusTemporaryRedirect)
 		return
 	} else {
 		gothic.BeginAuthHandler(response, request)
