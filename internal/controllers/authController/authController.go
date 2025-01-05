@@ -36,16 +36,18 @@ func Logout(res http.ResponseWriter, req *http.Request) {
 	res.WriteHeader(http.StatusTemporaryRedirect)
 }
 
-func Login(res http.ResponseWriter, r *http.Request) {
-	provider := chi.URLParam(r, "provider")
+func Login(response http.ResponseWriter, request *http.Request) {
+	provider := chi.URLParam(request, "provider")
 	fmt.Println("### AUTH PROVIDER ###", provider)
 
-	r = r.WithContext(context.WithValue(r.Context(), "provider", provider))
+	request = request.WithContext(context.WithValue(request.Context(), "provider", provider))
 
 	// try to get the user without re-authenticating
-	if gothUser, err := gothic.CompleteUserAuth(res, r); err == nil {
-		fmt.Fprintln(res, gothUser)
+	if gothUser, err := gothic.CompleteUserAuth(response, request); err == nil {
+		gothic.StoreInSession("access_token", gothUser.AccessToken, request, response)
+		fmt.Fprintln(response, gothUser)
+		http.Redirect(response, request, "/", http.StatusTemporaryRedirect)
 	} else {
-		gothic.BeginAuthHandler(res, r)
+		gothic.BeginAuthHandler(response, request)
 	}
 }
