@@ -45,13 +45,14 @@ func Login(response http.ResponseWriter, request *http.Request) {
 	// try to get the user without re-authenticating
 	if gothUser, err := gothic.CompleteUserAuth(response, request); err == nil {
 		// Store the access token in a cookie
-		http.SetCookie(response, &http.Cookie{
+		cookie := &http.Cookie{
 			Name:     "access_token",
 			Value:    gothUser.AccessToken,
 			Path:     "/",
 			HttpOnly: false, // Allow access from client-side JavaScript
-		})
-		http.Redirect(response, request, "/", http.StatusTemporaryRedirect)
+		}
+		http.SetCookie(response, cookie)
+		http.Redirect(response, request, "https://usual-chrissie-sojborg-72e46f20.koyeb.app/", http.StatusTemporaryRedirect)
 		return
 	} else {
 		gothic.BeginAuthHandler(response, request)
