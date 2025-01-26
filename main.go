@@ -9,6 +9,7 @@ import (
 
 	"github.com/sojborg/go-todo/internal/auth"
 	todoControllers "github.com/sojborg/go-todo/internal/controllers/todoController"
+	internalMiddleware "github.com/sojborg/go-todo/internal/middleware"
 	"github.com/sojborg/go-todo/internal/routes"
 
 	"github.com/go-chi/chi/v5"
@@ -58,12 +59,7 @@ func main() {
 	r.Use(middleware.Logger)
 
 	if ENV == "development" {
-		r.Use(middleware.SetHeader("Access-Control-Allow-Origin", "http://localhost:5173"))
-		r.Use(middleware.SetHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE"))
-		r.Use(middleware.SetHeader("Access-Control-Allow-Headers", "Content-Type"))
-		r.Options("/*", func(w http.ResponseWriter, r *http.Request) {
-			w.WriteHeader(http.StatusOK)
-		})
+		r.Use(internalMiddleware.CorsMiddleware)
 	}
 
 	auth.NewAuth()

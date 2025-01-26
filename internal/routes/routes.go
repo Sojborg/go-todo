@@ -14,4 +14,5 @@ func RegisterRoutes(r *chi.Mux) {
 
 	r.Get("/auth/{provider}", authController.Login)
 	r.Get("/auth/{provider}/callback", authController.GetAuthCallbackFunction)
+	r.Get("/auth/userinfo", authController.GetUserInfo)
 }

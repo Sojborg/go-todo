@@ -1,13 +1,11 @@
 import { Box, Flex, Button, useColorModeValue, useColorMode, Text, Container } from "@chakra-ui/react";
 import { IoMoon } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
+import { useAuth } from "../providers/AuthProvider";
 
 export default function Navbar() {
 	const { colorMode, toggleColorMode } = useColorMode();
-
-	const login = () => {
-		window.location.href = "/auth/google";
-	};
+	const { login } = useAuth();
 
 	return (
 		<Container maxW={"900px"}>
@@ -20,7 +18,7 @@ export default function Navbar() {
 						gap={3}
 						display={{ base: "none", sm: "flex" }}
 					>
-						<img src='/go.png' alt='logo' width={40} height={40} />						
+						<img src='/go.png' alt='logo' width={40} height={40} />
 						<Text fontSize={"lg"} fontWeight={500}>
 							Daily Tasks
 						</Text>
